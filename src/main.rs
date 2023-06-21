@@ -10,6 +10,7 @@ const CLASSES: usize = 10;
 const INPUT_SIZE: usize = 28 * 28;
 const STEPS: u32 = 200;
 const LR: f32 = 0.1;
+const BATCH_SIZE: i64 = 200;
 
 
 
@@ -26,19 +27,25 @@ fn main() {
 
     // mnist
     let m = vision::mnist::load_dir("data").unwrap();
-    let x = m.train_images;
-    let y = m.train_labels;
+    let train_x = m.train_images;
+    let train_y = m.train_labels;
+    let test_x = m.test_images;
+    let test_y = m.test_labels;
 
     // init weights
     let mut w = init_weights_uniform();
-    // w.print()
 
     'train: for i in 0..STEPS {
         // compute images x weights in batches
 
+        // loop over n iterations
+        // permute up to size
+        // in iterations of batch size, slice
+        // get idxs from train by using index_select
+        // forward step 
         // update weights
 
-        // aggregate statistics
+        // epoch stats
     }
 }
 
@@ -56,4 +63,9 @@ fn init_weights_uniform() -> Tensor {
     let tempsor = tempsor.reshape(&out_shape).set_requires_grad(true);
     println!("Output weight tensor shape: {:?}", out_shape);
     tempsor
+}
+
+fn permute(nums: i64) -> Tensor {
+    let idxs = Tensor::randint(nums, &[nums]);
+    idxs
 }
